@@ -6,6 +6,8 @@ import { StyleSheet, Text, View } from "react-native";
 import AllExpenses from "./src/screens/AllExpenses";
 import ManageExpenses from "./src/screens/ManageExpenses";
 import RecentExpenses from "./src/screens/RecentExpenses";
+import { GolbalStyles } from "./src/utlis/constants/styles";
+import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -14,11 +16,34 @@ function ExpensesOverview() {
   return (
     <Tab.Navigator
       screenOptions={{
-        
+        headerStyle: {
+          backgroundColor: GolbalStyles.colors.primary500,
+        },
+        headerTintColor: "#fff",
+        tabBarStyle: {
+          backgroundColor: GolbalStyles.colors.primary500,
+        },
+        tabBarActiveTintColor: GolbalStyles.colors.accent500,
       }}
     >
-      <Tab.Screen name="AllExpenses" component={AllExpenses} />
-      <Tab.Screen name="RecentExpenses" component={RecentExpenses} />
+      <Tab.Screen
+        name="RecentExpenses"
+        component={RecentExpenses}
+        options={{
+          title: "Recent Expenses",
+          tabBarLabel: "Recent",
+          tabBarIcon: ({ color, size }) => <Ionicons name="hourglass" color={color} size={size} />,
+        }}
+      />
+      <Tab.Screen
+        name="AllExpenses"
+        component={AllExpenses}
+        options={{
+          title: "All Expenses",
+          tabBarLabel: "All Expenses",
+          tabBarIcon: ({ color, size }) => <Ionicons name="calendar" color={color} size={size} />,
+        }}
+      />
     </Tab.Navigator>
   );
 }
