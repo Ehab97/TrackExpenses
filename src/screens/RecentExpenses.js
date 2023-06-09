@@ -4,8 +4,6 @@ import ExpensesOutput from '../components/expenses/ExpensesOutput'
 
 export default function RecentExpenses() {
   return (
-    <View>
-      <ExpensesOutput periodName="Last 7 days" />
-    </View>
+    <ExpensesOutput periodName="Last 7 days" />
   )
 }
