@@ -8,6 +8,7 @@ import ManageExpenses from "./src/screens/ManageExpenses";
 import RecentExpenses from "./src/screens/RecentExpenses";
 import { GolbalStyles } from "./src/utlis/constants/styles";
 import { Ionicons } from "@expo/vector-icons";
+import IconButton from "./src/components/ui/IconButton";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -15,7 +16,7 @@ const Stack = createNativeStackNavigator();
 function ExpensesOverview() {
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         headerStyle: {
           backgroundColor: GolbalStyles.colors.primary500,
         },
@@ -24,7 +25,19 @@ function ExpensesOverview() {
           backgroundColor: GolbalStyles.colors.primary500,
         },
         tabBarActiveTintColor: GolbalStyles.colors.accent500,
-      }}
+        headerRight: ({ tintColor }) => {
+          return (
+            <IconButton
+              name="add"
+              size={24}
+              color={tintColor}
+              onPress={() => {
+                navigation.navigate("ManageExpenses");
+              }}
+            />
+          );
+        },
+      })}
     >
       <Tab.Screen
         name="RecentExpenses"
@@ -53,7 +66,14 @@ export default function App() {
     <>
       <StatusBar style="auto" />
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: GolbalStyles.colors.primary500,
+            },
+            headerTintColor: "#fff",
+          }}
+        >
           <Stack.Screen
             name="ExpensesOverview"
             component={ExpensesOverview}
@@ -61,7 +81,13 @@ export default function App() {
               headerShown: false,
             }}
           />
-          <Stack.Screen name="ManageExpenses" component={ManageExpenses} />
+          <Stack.Screen
+            name="ManageExpenses"
+            component={ManageExpenses}
+            options={{
+              presentation: "modal",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>

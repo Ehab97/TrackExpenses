@@ -2,13 +2,18 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { GolbalStyles } from "../../utlis/constants/styles";
 import { getFormattedDate } from "../../utlis/date";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ExpensesItem({ item }) {
+  const navgiation = useNavigation();
+  const expenseItemPressHandler = () => {
+    navgiation.navigate("ManageExpenses", { expense: item });
+  };
+
   return (
-    <Pressable>
+    <Pressable onPress={expenseItemPressHandler} style={({ pressed }) => [pressed && styles.pressed]}>
       <View style={styles.expenseItem}>
         <View
-        // style={styles}
         >
           <Text style={[styles.textBase, styles.descrption]}>{item.descrption}</Text>
           <Text styles={styles.textBase}>{getFormattedDate(item.date)}</Text>
@@ -55,5 +60,8 @@ const styles = StyleSheet.create({
   amount: {
     color: GolbalStyles.colors.primary500,
     fontWeight: "bold",
+  },
+  pressed: {
+    opacity: 0.75,
   },
 });

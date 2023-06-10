@@ -3,6 +3,7 @@ import React from 'react'
 import ExpensesItem from './ExpensesItem'
 
 export default function ExpensesList({ expenses}) {
+  
   return (
     <View>
      <FlatList
