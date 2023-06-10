@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import React, { useContext, useState } from "react";
 import IconButton from "../components/ui/IconButton";
 import { GolbalStyles } from "../utlis/constants/styles";
 import Button from "../components/ui/Buttons";
 import { ExpensesContext } from "../store/context/expensesContext";
+import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 
 export default function ManageExpenses({ navigation, route }) {
-  const expensesCTX = React.useContext(ExpensesContext);
+  const expensesCTX = useContext(ExpensesContext);
   const expense = route.params?.expense;
   const isEditing = !!expense;
 
@@ -19,19 +20,11 @@ export default function ManageExpenses({ navigation, route }) {
     expensesCTX.deleteExpense(expense.id);
     navigation.goBack();
   };
-
-  const handleSave = () => {
+  const handleSave = (expenseData) => {
     if (isEditing) {
-      expensesCTX.updateExpense(expense.id, {
-        ...expense,
-        descrption: "Updated Expense-Test",
-      });
+      expensesCTX.updateExpense(expense.id, expenseData);
     } else {
-      expensesCTX.addExpense({
-        descrption: "New Expense-Test",
-        amount: 100,
-        date: new Date(),
-      });
+      expensesCTX.addExpense(expenseData);
     }
     navigation.goBack();
   };
@@ -42,10 +35,13 @@ export default function ManageExpenses({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttonContainer}>
-        <Button text="Cancel" onPress={handleCancel} mode="flat" style={styles.button} />
-        <Button text={isEditing ? "Update " : "Add Expense"} onPress={handleSave} style={styles.button} />
-      </View>
+      <ExpenseForm
+        isEditing={isEditing}
+        onCancel={handleCancel}
+        onSumbit={handleSave}
+        submitLabel={isEditing ? "Update " : "Add Expense"}
+      />
+
       {isEditing && (
         <View style={styles.deleteContainer}>
           <IconButton name="trash" size={36} color={GolbalStyles.colors.error500} onPress={handleDelete} />
@@ -61,21 +57,12 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: GolbalStyles.colors.primary800,
   },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 16,
-  },
+
   deleteContainer: {
     marginTop: 16,
     paddingTop: 8,
     borderTopWidth: 2,
     borderTopColor: GolbalStyles.colors.primary200,
     alignItems: "center",
-  },
-  button: {
-    minWidth: 120,
-    marginHorizontal: 8,
   },
 });
