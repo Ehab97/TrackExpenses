@@ -21,6 +21,18 @@ export default function ManageExpenses({ navigation, route }) {
   };
 
   const handleSave = () => {
+    if (isEditing) {
+      expensesCTX.updateExpense(expense.id, {
+        ...expense,
+        descrption: "Updated Expense-Test",
+      });
+    } else {
+      expensesCTX.addExpense({
+        descrption: "New Expense-Test",
+        amount: 100,
+        date: new Date(),
+      });
+    }
     navigation.goBack();
   };
 
