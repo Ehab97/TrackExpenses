@@ -13,16 +13,22 @@ export default function ManageExpenses({ navigation, route }) {
     navigation.setOptions({ title });
   }, [navigation, isEditing]);
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    navigation.goBack();
+  };
 
-  const handleSave = () => {};
+  const handleSave = () => {
+    navigation.goBack();
+  };
 
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    navigation.goBack();
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <Button text="Cancel" onPress={handleCancel} mode="flat"  style={styles.button}/>
+        <Button text="Cancel" onPress={handleCancel} mode="flat" style={styles.button} />
         <Button text={isEditing ? "Update " : "Add Expense"} onPress={handleSave} style={styles.button} />
       </View>
       {isEditing && (
@@ -53,8 +59,8 @@ const styles = StyleSheet.create({
     borderTopColor: GolbalStyles.colors.primary200,
     alignItems: "center",
   },
-  button:{
-    minWidth:120,
-    marginHorizontal:8
-  }
+  button: {
+    minWidth: 120,
+    marginHorizontal: 8,
+  },
 });
