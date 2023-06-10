@@ -3,8 +3,10 @@ import React from "react";
 import IconButton from "../components/ui/IconButton";
 import { GolbalStyles } from "../utlis/constants/styles";
 import Button from "../components/ui/Buttons";
+import { ExpensesContext } from "../store/context/expensesContext";
 
 export default function ManageExpenses({ navigation, route }) {
+  const expensesCTX = React.useContext(ExpensesContext);
   const expense = route.params?.expense;
   const isEditing = !!expense;
 
@@ -14,6 +16,7 @@ export default function ManageExpenses({ navigation, route }) {
   }, [navigation, isEditing]);
 
   const handleDelete = () => {
+    expensesCTX.deleteExpense(expense.id);
     navigation.goBack();
   };
 
