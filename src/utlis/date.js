@@ -6,12 +6,13 @@ export const getFormattedDate = (date) => {
   const formattedMonth = month < 10 ? `0${month}` : month;
   const formattedDay = day < 10 ? `0${day}` : day;
 
-  return `${year}-${formattedMonth}-${formattedDay}`;
+  //   return `${year}-${formattedMonth}-${formattedDay}`;
+  return date.toISOString().split("T")[0];
 };
 
 export const getDateMinusDays = (date, days) => {
   const year = date.getFullYear();
-  const month = date.getMonth() ;
+  const month = date.getMonth();
   const day = date.getDate() - days;
 
   return new Date(year, month, day);

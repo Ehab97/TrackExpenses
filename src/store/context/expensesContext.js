@@ -23,6 +23,8 @@ const expensesReducer = (state, action) => {
       return state.filter((expense) => expense.id !== action.payload);
     case "UPDATE_EXPENSE":
       return state.map((expense) => (expense.id === action.payload.id ? action.payload : expense));
+    case "GET_EXPENSE":
+        return state.find((expense) => expense.id === action.payload);
     default:
       return state;
   }
@@ -77,7 +79,9 @@ const ExpensesContextProvider = ({ children }) => {
   const updateExpense = (id, expense) => {
     dispatch({ type: "UPDATE_EXPENSE", payload: { id, ...expense } });
   };
-  const getExpense = (id) => {};
+  const getExpense = (id) => {
+    dispatch({ type: "GET_EXPENSE", payload: id });
+  };
   const getExpenses = () => {};
   const getRecentExpenses = () => {};
   const getAllExpenses = () => {};

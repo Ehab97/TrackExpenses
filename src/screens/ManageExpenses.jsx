@@ -1,8 +1,7 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import React, { useContext, useState } from "react";
 import IconButton from "../components/ui/IconButton";
 import { GolbalStyles } from "../utlis/constants/styles";
-import Button from "../components/ui/Buttons";
 import { ExpensesContext } from "../store/context/expensesContext";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 
@@ -40,6 +39,7 @@ export default function ManageExpenses({ navigation, route }) {
         onCancel={handleCancel}
         onSumbit={handleSave}
         submitLabel={isEditing ? "Update " : "Add Expense"}
+        expense={isEditing ? expense : undefined}
       />
 
       {isEditing && (

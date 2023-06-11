@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { GolbalStyles } from "../../utlis/constants/styles";
-export default function Input({ label, textInputConfig, style }) {
+export default function Input({ label, textInputConfig, style, invalid }) {
   return (
-    <View style={[styles.inputContainer,style]}>
-      <Text style={styles.label}>{label}</Text>
+    <View style={[styles.inputContainer, style]}>
+      <Text style={[styles.label, invalid && styles.invalidLabel]}>{label}</Text>
       <TextInput
-        style={[styles.input,  textInputConfig.multiline && styles.inputMultiline]}
+        style={[styles.input, textInputConfig.multiline && styles.inputMultiline, invalid && styles.invalidInput]}
         {...textInputConfig}
       />
     </View>
@@ -33,5 +33,11 @@ const styles = StyleSheet.create({
   inputMultiline: {
     minHeight: 100,
     textAlignVertical: "top",
+  },
+  invalidLabel: {
+    color: GolbalStyles.colors.error500,
+  },
+  invalidInput: {
+    backgroundColor: GolbalStyles.colors.error50,
   },
 });
