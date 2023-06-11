@@ -1,6 +1,6 @@
 # Track Expenses
 
-A React Native app that allows users to Track theri Expses
+A React Native app that allows users to Track their  Expses
 
 ## Getting Started
 
