@@ -5,6 +5,7 @@ import Button from "../ui/Buttons";
 import { getFormattedDate } from "../../utlis/date";
 import { GolbalStyles } from "../../utlis/constants/styles";
 
+
 export default function ExpenseForm({ onSumbit, onCancel, submitLabel, expense }) {
   const [inputValues, setInputValues] = useState({
     amount: {
@@ -15,7 +16,7 @@ export default function ExpenseForm({ onSumbit, onCancel, submitLabel, expense }
       value: "",
       isValid: true,
     },
-    descrption: {
+    description: {
       value: "",
       isValid: true,
     },
@@ -31,25 +32,25 @@ export default function ExpenseForm({ onSumbit, onCancel, submitLabel, expense }
     }));
   };
 
-  const sumbitHandler = () => {
+  const sumbitHandler = async () => {
     const expenseData = {
       amount: +inputValues.amount.value,
       date: new Date(inputValues.date.value),
-      descrption: inputValues.descrption.value,
+      description: inputValues.description.value,
     };
 
     //validate
     const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0;
     const dateIsValid = expenseData.date.toString() !== "Invalid Date";
-    const descrptionIsValid = expenseData.descrption.trim().length > 0;
+    const descriptionIsValid = expenseData.description.trim().length > 0;
 
     const objValidations = {
       amount: amountIsValid,
       date: dateIsValid,
-      descrption: descrptionIsValid,
+      description: descriptionIsValid,
     };
     console.log(objValidations, expenseData);
-    if (!amountIsValid || !dateIsValid || !descrptionIsValid) {
+    if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
       //TODO: show error
       let errorText = "";
       Object.keys(objValidations).forEach((key, index) => {
@@ -72,8 +73,7 @@ export default function ExpenseForm({ onSumbit, onCancel, submitLabel, expense }
       Alert.alert("Invalid input", `Please check your inputs ${errorText}`, [{ text: "Okay" }], { cancelable: false });
       return;
     }
-
-    onSumbit(expenseData);
+    onSumbit({ expenseData });
   };
 
   useEffect(() => {
@@ -87,15 +87,15 @@ export default function ExpenseForm({ onSumbit, onCancel, submitLabel, expense }
           value: getFormattedDate(expense.date),
           isValid: true,
         },
-        descrption: {
-          value: expense.descrption,
+        description: {
+          value: expense.description,
           isValid: true,
         },
       });
     }
   }, [expense]);
 
-  const formIsInvalid=Object.keys(inputValues).some(key=>!inputValues[key].isValid)
+  const formIsInvalid = Object.keys(inputValues).some((key) => !inputValues[key].isValid);
 
   return (
     <View style={styles.form}>
@@ -114,7 +114,7 @@ export default function ExpenseForm({ onSumbit, onCancel, submitLabel, expense }
         />
         <Input
           label="Date"
-            invalid={!inputValues.date.isValid}
+          invalid={!inputValues.date.isValid}
           textInputConfig={{
             placeholder: "YYYY-MM-DD",
             onChangeText: inputChangeHandler.bind(this, "date"),
@@ -125,20 +125,18 @@ export default function ExpenseForm({ onSumbit, onCancel, submitLabel, expense }
         />
       </View>
       <Input
-        label="descrption"
-        invalid={!inputValues.descrption.isValid}
+        label="description"
+        invalid={!inputValues.description.isValid}
         textInputConfig={{
-          placeholder: "Enter descrption",
-          onChangeText: inputChangeHandler.bind(this, "descrption"),
-          value: inputValues.descrption.value,
+          placeholder: "Enter description",
+          onChangeText: inputChangeHandler.bind(this, "description"),
+          value: inputValues.description.value,
           multiline: true,
           //   autoCorrect: false,
           //   autoCapitalize: "none",
         }}
       />
-      {
-        formIsInvalid && <Text style={styles.textError}>Please check your inputs</Text>
-      }
+      {formIsInvalid && <Text style={styles.textError}>Please check your inputs</Text>}
       <View style={styles.buttonContainer}>
         <Button text="Cancel" onPress={onCancel} mode="flat" style={styles.button} />
         <Button text={submitLabel} onPress={sumbitHandler} style={styles.button} />
@@ -179,5 +177,5 @@ const styles = StyleSheet.create({
     color: GolbalStyles.colors.error500,
     textAlign: "center",
     margin: 8,
-  }
+  },
 });

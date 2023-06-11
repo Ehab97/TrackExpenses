@@ -9,13 +9,13 @@ export default function ExpensesItem({ item }) {
   const expenseItemPressHandler = () => {
     navgiation.navigate("ManageExpenses", { expense: item });
   };
-
+  // console.log({ item });
   return (
     <Pressable onPress={expenseItemPressHandler} style={({ pressed }) => [pressed && styles.pressed]}>
       <View style={styles.expenseItem}>
         <View
         >
-          <Text style={[styles.textBase, styles.descrption]}>{item.descrption}</Text>
+          <Text style={[styles.textBase, styles.description]}>{item.description}</Text>
           <Text styles={styles.textBase}>{getFormattedDate(item.date)}</Text>
         </View>
         <View style={styles.amountContainer}>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   textBase: {
     color: GolbalStyles.colors.primary50,
   },
-  descrption: {
+  description: {
     fontSize: 16,
     marginBottom: 4,
     fontWeight: "bold",
